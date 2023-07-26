@@ -34,6 +34,7 @@ for phrase in phrases:
 
     countAlphabetLettersInPhrase(phrase)
   pause = input("Press enter to continue...")
+  
 
 
         
