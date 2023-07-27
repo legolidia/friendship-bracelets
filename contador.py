@@ -1,40 +1,35 @@
 from letters import letters
 from phrases import phrases
+from lettersused import lettersAlreadyChecked
 
-def countAlphabetLettersInPhrase(phrase):
-    initialPhrase = phrase
-    numLetter = 0
-    lettersAlreadyChecked = []
-    notEnough = []
-    for letter in letters:
-      for i in phrase:
-        if i == letter and letter not in lettersAlreadyChecked:
-          phrase = phrase.replace(i, "")
-          if i in phrase:
-            numLetter += 1
-          if numLetter >= letters[letter]:
-            print("not enough %s's" % letter)
-            notEnough.append(letter)
-          else:
-            print("enough %s's" % letter)
-          lettersAlreadyChecked.append(letter)
-      numLetter = 0
-    print("letters not enough:", notEnough)
-    if notEnough == []:
-      print("You have enough letters to make the phrase: %s" % initialPhrase)
-    else:
-      print("You don't have enough letters to make the phrase: %s" % initialPhrase)
+def countLetters(phrase, lettersAlreadyChecked):
+  initialPhrase = phrase.upper().replace(" ", "")
+  print(phrase)
+  print(initialPhrase)
+
+  lettersAlreadyChecked = dict.fromkeys(lettersAlreadyChecked, 0)
+  letter_verified = []
+  notEnough = []
+
+  for letter in initialPhrase:
+    lettersAlreadyChecked[letter] += 1
+
+  for letter in initialPhrase:
+    if letter not in letter_verified:
+      letter_verified.append(letter)
+      if lettersAlreadyChecked[letter] > letters[letter]:
+        print("not enough %s's" % letter)
+        notEnough.append(letter)
+      else:
+        print("enough %s's" % letter)
+
+  print("letters not enough:", notEnough)
+
+  if notEnough == []:
+    print("You have enough letters to make the phrase: %s" % phrase)
+  else:
+    print("You don't have enough letters to make the phrase: %s" % phrase)
 
 for phrase in phrases:
-  phrase = phrase.upper()
-  
-  for i in phrase:
-    if i == " ":
-      phrase = phrase.replace(i, "")
-
-    countAlphabetLettersInPhrase(phrase)
+  countLetters(phrase, lettersAlreadyChecked)
   pause = input("Press enter to continue...")
-  
-
-
-        
